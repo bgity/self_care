@@ -1,0 +1,38 @@
+var App = angular.module('userLogin', []);
+
+App.controller('LoginController', function($scope, $location, Users){
+ console.log("INnnn")
+ $scope.username = undefined;
+ $scope.password = undefined;
+ $scope.message = undefined;
+ $scope.submitForm = function ()
+ {
+	 //console.log("dsad");return false;
+	 Users.checkLogin($scope.username, $scope.password).success(function (data) {
+		
+		$scope.message = data.status;
+		if($scope.message == 'success') {
+			window.location = '';
+		} else {
+			jQuery('.alert').show();
+			jQuery('.alert > span').html(data.msg);
+		}
+	 })
+	 .error(function (data) {
+		 console.log(data);
+	 });
+ }
+ });
+
+App.factory("Users", function ($http) {
+    var factory = {};
+    factory.checkLogin = function (username, password) {
+        return $http({
+            method: 'POST',
+			data: JSON.stringify({username: username,password:password}),
+            url: 'login/login_ang',
+            responseType: 'json'
+        });
+    };
+	return factory;
+});

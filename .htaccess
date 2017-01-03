@@ -1,0 +1,15 @@
+#write your project folder name as rewritebase
+
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/system.*
+RewriteRule ^(.*) index.php?/$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+) index.php?/$1 [L]
+
+#AddHandler php53 .php
+#Action php53 /cgi-bin/php53.cgi
+
+
+#php_flag safe_mode On
+php_flag short_open_tag on
